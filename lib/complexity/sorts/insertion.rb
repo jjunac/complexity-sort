@@ -15,6 +15,7 @@ class Insertion
             arr[j+1] = x
             i += 1
         end
+        return arr
     end
 
 end
