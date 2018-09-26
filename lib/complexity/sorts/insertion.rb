@@ -3,7 +3,7 @@ class Insertion
     def initialize
     end
 
-    def sort!(arr)
+    def sort(arr)
         i = 1
         while i < arr.length
             x = arr[i]
@@ -15,10 +15,6 @@ class Insertion
             arr[j+1] = x
             i += 1
         end
-    end
-
-    def sort(arr)
-        return sort! arr.map(&:clone)
     end
 
 end
