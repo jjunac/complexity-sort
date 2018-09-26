@@ -1,11 +1,18 @@
-require "test_helper"
+require "./test/test_helper"
+require "./lib/complexity/sorts/insertion"
 
 class Complexity::SortTest < Minitest::Test
-  def test_that_it_has_a_version_number
-    refute_nil ::Complexity::Sort::VERSION
+  def test_insertion
+    insertion = Insertion.new
+    assert array_sorted?(insertion.sort([1, 2, 3, 4, 5]))
+    assert array_sorted?(insertion.sort([5, 4, 3, 2, 1]))
+    assert array_sorted?(insertion.sort([1, 2, 6, 4, 5]))
+    assert array_sorted?(insertion.sort([3, 2, 6, 1, 5]))
   end
 
-  def test_it_does_something_useful
-    assert false
+  def array_sorted?(arr)
+    (1...arr.length).all? do |i|
+      arr[i - 1] < arr[i]
+    end
   end
 end
