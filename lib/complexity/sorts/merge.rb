@@ -1,15 +1,15 @@
-class Insertion
+class Merge
 
     def initialize
     end
 
     def sort(arr)
         if arr.length <= 1
-            return
+            return arr
         end
         mid = arr.length / 2
-        left = sort arr(0...mid)
-        right = sort arr(mid...arr.length - mid)
+        left = sort arr[0...mid]
+        right = sort arr[mid...arr.length - mid]
 
         return merge(left, right)
     end

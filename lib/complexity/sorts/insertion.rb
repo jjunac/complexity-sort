@@ -4,8 +4,7 @@ class Insertion
     end
 
     def sort(arr)
-        i = 1
-        while i < arr.length
+        1.upto arr.length - 1 do |i|
             x = arr[i]
             j = i - 1
             while j >= 0 and arr[j] > x
