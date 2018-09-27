@@ -1,4 +1,4 @@
-require "./lib/complexity/sorts/insertion"
+require_relative 'insertion'
 
 class Quick
 

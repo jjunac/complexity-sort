@@ -2,7 +2,7 @@ require 'benchmark'
 
 class Array
   def sum
-    inject(0.0) {|result, el| result.real + el.real}
+    inject(0.0) {|result, el| result + el}
   end
 
   def mean
@@ -12,27 +12,42 @@ end
 
 class Tester
 
-  def initialize(number_max = 1000, repeat = 1000, max_len = 8)
+  def initialize(number_max: 1000, repeat: 1000, max_len: 8, log: false)
     @number_max = number_max
     @repeat = repeat
     @max_len = max_len
+    @log = log
   end
 
+  def execute_all(*algorithms)
+    results = Hash.new
+    sizes = []
+    for algorithm in algorithms
+      results[algorithm.class.name], sizes = execute(algorithm)
+    end
+    [results, sizes]
+  end
 
   def execute(sort_algorithm)
     times = []
+    sizes = []
+    means = []
     for n in 1..@max_len
-      array = generate_random(2 ** n)
+      size = 2 ** n
+      sizes << size
+      array = generate_random(size)
       times[n - 1] = []
       for i in 0...@repeat
         time = Benchmark.measure {sort_algorithm.sort(array)}
-        times[n - 1] << time
+        times[n - 1] << time.real
       end
-      p times[n - 1][0].real
       mean = times[n - 1].mean
-      p "The mean time for #{2 ** n} random values is #{mean}"
+      means << [mean]
+      if @log
+        p "The mean time for #{size} random values is #{mean}"
+      end
     end
-    times
+    [means, sizes]
   end
 
 
