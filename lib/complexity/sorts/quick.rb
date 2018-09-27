@@ -8,7 +8,14 @@ class Quick
         @insertion = Insertion.new
     end
 
+    def random(arr, lo, hi)
+        return arr[lo..hi].sample
+    end
+
     def median_3(arr, lo, hi)
+        if hi - lo == 1
+            return arr[lo]
+        end
         a = arr[lo]
         b = arr[lo+(hi-lo)/2]
         c = arr[hi]
