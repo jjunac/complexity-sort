@@ -1,9 +1,9 @@
 require "./test/test_helper"
-require "./lib/complexity/sorts/insertion"
+require "./lib/complexity/sorts/quick"
 
 class Complexity::SortTest < Minitest::Test
   def test_insertion
-    insertion = Insertion.new
+    insertion = Quick.new
     assert array_sorted?(insertion.sort([1, 2, 3, 4, 5]))
     assert array_sorted?(insertion.sort([5, 4, 3, 2, 1]))
     assert array_sorted?(insertion.sort([1, 2, 6, 4, 5]))

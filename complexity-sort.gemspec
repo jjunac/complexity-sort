@@ -1,11 +1,10 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "complexity/sort/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "complexity-sort"
-  spec.version       = Complexity::Sort::VERSION
+  spec.version       = 1.0
   spec.authors       = ["Jeremy Junac"]
   spec.email         = ["jeremy.junac@etu.unice.fr"]
 
