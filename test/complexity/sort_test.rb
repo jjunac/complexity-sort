@@ -2,10 +2,11 @@ require "./test/test_helper"
 require "./lib/complexity/sorts/quick"
 require "./lib/complexity/sorts/merge"
 require "./lib/complexity/sorts/heap"
+require "./lib/complexity/sorts/smooth"
 require "./lib/complexity/tester/array_generator"
 class Complexity::SortTest < Minitest::Test
   def test_all_algorithms
-    algorithms = [Insertion.new, Merge.new, Quick.new, Heap.new]
+    algorithms = [Insertion.new, Merge.new, Quick.new, Heap.new, Smooth.new]
     # algorithms.each {|algo| check_algorithm(algo)}
   end
 
@@ -23,6 +24,10 @@ class Complexity::SortTest < Minitest::Test
 
   def test_merge
     check_algorithm(Merge.new)
+  end
+
+  def test_smooth
+    check_algorithm(Smooth.new)
   end
 
   def assert_array_sorted(arr)
