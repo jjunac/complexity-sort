@@ -6,13 +6,17 @@ class CSVExporter
   end
 
   def export_map(filename, sizes, data)
-    sizes.unshift("array size")
-    CSV.open(filename, "w", {:col_sep => ";", :write_headers => true,
-                             :headers => sizes}) do |csv|
-      data.each {|name, result|
-        (0...result[0].length).each {|j|
-          csv << (0...result.length).map {|i| result[i][j]}.unshift(name)
+    headers = data.map {|name, result| name}.unshift("array size")
+    CSV.open(filename, "w", {:col_sep => ",", :write_headers => true,
+                             :headers => headers}) do |csv|
+      _,first_result = p data.first
+      (0...first_result.length).each {|i|
+        line = []
+        data.each {|name, result|
+          p name, result
+          line << result[i]
         }
+        csv << line.unshift(sizes.shift)
       }
     end
   end

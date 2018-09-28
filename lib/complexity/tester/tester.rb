@@ -42,7 +42,7 @@ class Tester
         times[n - 1] << time.real
       end
       mean = times[n - 1].mean
-      means << [mean]
+      means << mean
       if @log
         p "The mean time for #{size} random values is #{mean}"
       end
