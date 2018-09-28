@@ -58,24 +58,23 @@ class Quick
                 if d < a
                     # d < a
                     # c < a < b
-                    if a >= e
+                    if a < e
                         return a
                     else
                         # d < a
-                        # c < a < b
                         # e < a
-                        if d < c
-                            # d < c < a < b
-                            #     e < a
-                            if e < c
+                        # c < a < b
+                        if e < c
+                            #     d < a
+                            # e < c < a < b
+                            if d < c
                                 return c
                             else
-                                # d < c < e < a < b
-                                return e
+                                return d
                             end
                         else
-                            # c < d < a < b
-                            #     e < a
+                            #     d < a
+                            # c < e < a < b
                             if d < e
                                 return e
                             else
@@ -234,16 +233,178 @@ class Quick
             # b < a
             if a < c
                 # b < a < c
-                return a
+                if d < a
+                    # b < a < c
+                    # d < a
+                    if a < e
+                        return a
+                    else
+                        # b < a < c
+                        # d < a
+                        # e < a
+                        if d < b
+                            # d < b < a < c
+                            #     e < a
+                            if e < b
+                                return b
+                            else
+                                return e
+                            end
+                        else
+                            # b < d < a < c
+                            #     e < a
+                            if e < d
+                                return d
+                            else
+                                return e
+                            end
+                        end
+                    end
+                else
+                    # b < a < c
+                    #     a < d
+                    if e < a
+                        return a
+                    else
+                        #     a < e
+                        #     a < d
+                        # b < a < c
+                        if c < d
+                            #     a < e
+                            # b < a < c < d
+                            if c < e
+                                return c
+                            else
+                                return e
+                            end
+                        else
+                            #     a < e
+                            # b < a < d < c
+                            if d < e
+                                return d
+                            else
+                                return e
+                            end
+                        end
+                    end
+                end
             else
                 # b < a
                 # c < a
                 if b >= c
                     # c < b < a
-                    return b
+                    if d < b
+                        # c < b < a
+                        # d < b
+                        if b < e
+                            return b
+                        else
+                            # c < b < a
+                            # d < b
+                            # e < b
+                            if d < c
+                                # d < c < b < a
+                                #     e < b
+                                if e < c
+                                    return c
+                                else
+                                    return e
+                                end
+                            else
+                                # c < d < b < a
+                                #     e < b
+                                if e < d
+                                    return d
+                                else
+                                    return e
+                                end
+                            end
+                        end
+                    else
+                        # c < b < a
+                        #     b < d
+                        if e < b
+                            return b
+                        else
+                            #     b < e
+                            #     b < d
+                            # c < b < a
+                            if a < d
+                                #     b < e
+                                # c < b < a < d
+                                if a < e
+                                    return a
+                                else
+                                    return e
+                                end
+                            else
+                                #     b < e
+                                # c < b < d < a
+                                if d < e
+                                    return d
+                                else
+                                    return e
+                                end
+                            end
+                        end
+                    end
                 else
                     # b < c < a
-                    return c
+                    if d < c
+                        # b < c < a
+                        # d < c
+                        if c < e
+                            return c
+                        else
+                            # b < c < a
+                            # d < c
+                            # e < c
+                            if d < b
+                                # d < b < c < a
+                                #     e < c
+                                if e < b
+                                    return b
+                                else
+                                    return e
+                                end
+                            else
+                                # b < d < c < a
+                                #     e < c
+                                if e < d
+                                    return d
+                                else
+                                    return e
+                                end
+                            end
+                        end
+                    else
+                        # b < c < a
+                        #     c < d
+                        if e < c
+                            return c
+                        else
+                            #     c < e
+                            #     c < d
+                            # b < c < a
+                            if a < d
+                                #     c < e
+                                # b < c < a < d
+                                if a < e
+                                    return a
+                                else
+                                    return e
+                                end
+                            else
+                                #     c < e
+                                # b < c < d < a
+                                if d < e
+                                    return d
+                                else
+                                    return e
+                                end
+                            end
+                        end
+                    end
                 end
             end
         end
