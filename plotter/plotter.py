@@ -23,6 +23,14 @@ for k in df:
         traces.append(trace)
 
 layout = go.Layout(title='Simple Plot from csv data',
+                     xaxis=dict(
+                        type='log',
+                        autorange=True
+                    ),
+                    yaxis=dict(
+                        type='log',
+                        autorange=True
+                    ),
                    plot_bgcolor='rgb(230, 230,230)')
 #
 fig = go.Figure(data=traces, layout=layout)

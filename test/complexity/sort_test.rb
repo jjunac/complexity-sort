@@ -1,28 +1,66 @@
 require "./test/test_helper"
 require "./lib/complexity/sorts/quick"
-require "./lib/complexity/sorts/insertion"
 require "./lib/complexity/sorts/merge"
 require "./lib/complexity/sorts/heap"
-
+require "./lib/complexity/tester/array_generator"
 class Complexity::SortTest < Minitest::Test
   def test_all_algorithms
     algorithms = [Insertion.new, Merge.new, Quick.new, Heap.new]
-    algorithms.each {|algo| check_algorithm(algo)}
+    # algorithms.each {|algo| check_algorithm(algo)}
   end
 
-  def array_sorted?(arr)
-    (1...arr.length).all? do |i|
+  def test_heap
+    check_algorithm(Heap.new)
+  end
+
+  def test_insertion
+    check_algorithm(Insertion.new)
+  end
+
+  def test_quick
+    check_algorithm(Quick.new)
+  end
+
+  def test_merge
+    check_algorithm(Merge.new)
+  end
+
+  def assert_array_sorted(arr)
+    assert (1...arr.length).all? do |i|
       arr[i - 1] < arr[i]
     end
   end
 
-  private
+  def assert_array_same_values(original, sorted)
+    copy = original[0...original.length]
+    assert_equal copy.sort, sorted.sort
+  end
 
-  def check_algorithm(insertion)
-    assert array_sorted?(insertion.sort([1, 2, 3, 4, 5]))
-    assert array_sorted?(insertion.sort([5, 4, 3, 2, 1]))
-    assert array_sorted?(insertion.sort([1, 2, 6, 4, 5]))
-    assert array_sorted?(insertion.sort([3, 2, 6, 1, 5]))
-    assert array_sorted?(insertion.sort([3, 2, 6, 1, 5,7,5466,46,4857,435,23477,8765,342]))
+  def assert_array_correct(original, sorted)
+    assert_array_sorted(sorted)
+    assert_array_same_values(original, sorted)
+  end
+
+  def check_algorithm(algo)
+    arr = [1, 2, 3, 4, 5]
+    assert_array_correct(arr, algo.sort(arr))
+    arr = [5, 4, 3, 2, 1]
+    assert_array_correct(arr, algo.sort(arr))
+    arr = [1, 2, 6, 4, 5]
+    assert_array_correct(arr, algo.sort(arr))
+    arr = [3, 2, 6, 1, 5]
+    assert_array_correct(arr, algo.sort(arr))
+    arr = [3, 2, 6, 1, 5, 7]
+    assert_array_correct(arr, algo.sort(arr))
+
+    generator = SeededRandomArrayGenerator.new(1234)
+    arr = generator.generate(2 ** 4)
+    assert_array_correct(arr, algo.sort(arr))
+    arr = generator.generate(2 ** 5)
+    assert_array_correct(arr, algo.sort(arr))
+    arr = generator.generate(2 ** 6)
+    assert_array_sorted(algo.sort(arr))
+    # arr = generator.generate(2 ** 7)
+    # assert_array_correct(arr, algo.sort(arr))
   end
 end

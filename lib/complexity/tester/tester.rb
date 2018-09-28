@@ -12,11 +12,12 @@ end
 
 class Tester
 
-  def initialize(number_max: 1000, repeat: 1000, max_len: 8, log: false)
+  def initialize(number_max: 1000, repeat: 1000, max_len: 8, log: false, random_generator: RandomArrayGenerator.new)
     @number_max = number_max
     @repeat = repeat
     @max_len = max_len
     @log = log
+    @random_generator = random_generator
   end
 
   def execute_all(*algorithms)
@@ -35,7 +36,7 @@ class Tester
     for n in 1..@max_len
       size = 2 ** n
       sizes << size
-      array = generate_random(size)
+      array = @random_generator.generate(size)
       times[n - 1] = []
       for i in 0...@repeat
         time = Benchmark.measure {sort_algorithm.sort(array)}
@@ -50,8 +51,4 @@ class Tester
     [means, sizes]
   end
 
-
-  def generate_random(size)
-    (0...size).map {rand(@number_max)}
-  end
 end

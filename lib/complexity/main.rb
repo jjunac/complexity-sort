@@ -12,7 +12,7 @@ class RubyDefault
   end
 end
 
-tester = Tester.new(max_len: 8)
+tester = Tester.new(max_len: 14)
 csv_exporter = CSVExporter.new
 
 insertion, sizes = tester.execute_all(Insertion.new, Heap.new, Merge.new, RubyDefault.new)
