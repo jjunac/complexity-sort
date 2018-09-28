@@ -42,6 +42,213 @@ class Quick
         end
     end
 
+    def median_5(arr, lo, hi)
+        if hi - lo == 1
+            return arr[lo]
+        end
+        a = arr[lo]
+        b = arr[lo+(hi-lo)/4]
+        c = arr[lo+(hi-lo)/2]
+        d = arr[lo+3*(hi-lo)/4]
+        e = arr[hi]
+        if a < b
+            # a < b
+            if a >= c
+                # c < a < b
+                if d < a
+                    # d < a
+                    # c < a < b
+                    if a >= e
+                        return a
+                    else
+                        # d < a
+                        # c < a < b
+                        # e < a
+                        if d < c
+                            # d < c < a < b
+                            #     e < a
+                            if e < c
+                                return c
+                            else
+                                # d < c < e < a < b
+                                return e
+                            end
+                        else
+                            # c < d < a < b
+                            #     e < a
+                            if d < e
+                                return e
+                            else
+                                return d
+                            end
+                        end
+                    end
+                else
+                    #     a < d
+                    # c < a < b
+                    if e < a
+                        return a
+                    else
+                        #     a < e
+                        #     a < d
+                        # c < a < b
+                        if b < d
+                            #     a < e
+                            # c < a < b < d
+                            if b < e
+                                return b
+                            else
+                                return e
+                            end
+                        else
+                            #     a < e
+                            # c < a < d < b
+                            if d < e
+                                return d
+                            else
+                                return e
+                            end
+                        end
+                    end
+                end
+            else
+                # a < b
+                # a < c
+                if b < c
+                    # a < b < c
+                    if d < b
+                        # a < b < c
+                        # d < b
+                        if b < e
+                            return b
+                        else
+                            # a < b < c
+                            # d < b
+                            # e < b
+                            if d < a
+                                # d < a < b < c
+                                #     e < b
+                                if e < a
+                                    return a
+                                else
+                                    return e
+                                end
+                            else
+                                # a < d < b < c
+                                #     e < b
+                                if e < d
+                                    return d
+                                else
+                                    return e
+                                end
+                            end
+                        end
+                    else
+                        # a < b < c
+                        #     b < d
+                        if e < b
+                            return b
+                        else
+                            #     b < e
+                            #     b < d
+                            # a < b < c
+                            if c < d
+                                #     b < e
+                                # a < b < c < d
+                                if c < e
+                                    return c
+                                else
+                                    return e
+                                end
+                            else
+                                #     b < e
+                                # a < b < d < c
+                                if d < e
+                                    return d
+                                else
+                                    return e
+                                end
+                            end
+                        end
+                    end
+                else
+                    # a < c < b
+                    if d < c
+                        # a < c < b
+                        # d < c
+                        if c < e
+                            return c
+                        else
+                            # a < c < b
+                            # d < c
+                            # e < c
+                            if d < a
+                                # d < a < c < b
+                                #     e < c
+                                if e < a
+                                    return a
+                                else
+                                    return e
+                                end
+                            else
+                                # a < d < c < b
+                                #     e < c
+                                if e < d
+                                    return d
+                                else
+                                    return e
+                                end
+                            end
+                        end
+                    else
+                        # a < c < b
+                        #     c < d
+                        if e < c
+                            return c
+                        else
+                            #     c < e
+                            #     c < d
+                            # a < c < b
+                            if b < d
+                                #     c < e
+                                # a < c < b < d
+                                if b < e
+                                    return b
+                                else
+                                    return e
+                                end
+                            else
+                                #     c < e
+                                # a < c < d < b
+                                if d < e
+                                    return d
+                                else
+                                    return e
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        else
+            # b < a
+            if a < c
+                # b < a < c
+                return a
+            else
+                # b < a
+                # c < a
+                if b >= c
+                    # c < b < a
+                    return b
+                else
+                    # b < c < a
+                    return c
+                end
+            end
+        end
+    end
+
     def sort(arr)
         quicksort(arr, 0, arr.length-1, :median_3)
     end
