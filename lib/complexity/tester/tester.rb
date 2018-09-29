@@ -1,54 +1,82 @@
 require 'benchmark'
-
+require 'concurrent'
+require_relative 'array_generator'
 class Array
-  def sum
-    inject(0.0) {|result, el| result + el}
-  end
+    def sum
+        inject(0.0) {|result, el| result + el}
+    end
 
-  def mean
-    sum / size
-  end
+    def mean
+        sum / size
+    end
 end
 
 class Tester
 
-  def initialize(number_max: 1000, repeat: 1000, max_len: 8, log: false, random_generator: RandomArrayGenerator.new)
-    @number_max = number_max
-    @repeat = repeat
-    @max_len = max_len
-    @log = log
-    @random_generator = random_generator
-  end
-
-  def execute_all(*algorithms)
-    results = Hash.new
-    sizes = []
-    for algorithm in algorithms
-      results[algorithm.class.name], sizes = execute(algorithm)
+    def initialize(number_max: 100000, repeat: 1000, max_time: 10, max_len: 8, log: false, array_generator: nil)
+        @number_max = number_max
+        @repeat = repeat
+        @max_len = max_len
+        @log = log
+        @max_time = max_time
+        if array_generator.nil?
+            array_generator = RandomArrayGenerator.new(number_max: number_max)
+        end
+        @array_generator = array_generator
     end
-    [results, sizes]
-  end
 
-  def execute(sort_algorithm)
-    times = []
-    sizes = []
-    means = []
-    for n in 1..@max_len
-      size = 2 ** n
-      sizes << size
-      array = @random_generator.generate(size)
-      times[n - 1] = []
-      for i in 0...@repeat
-        time = Benchmark.measure {sort_algorithm.sort(array)}
-        times[n - 1] << time.real
-      end
-      mean = times[n - 1].mean
-      means << mean
-      if @log
-        p "The mean time for #{size} random values is #{mean}"
-      end
+    def execute_all(*algorithms)
+        results = Hash.new
+        sizes = []
+        algorithms.each {|algorithm|
+            results[algorithm.name], sizes = execute(algorithm)
+        }
+        [results, sizes]
     end
-    [means, sizes]
-  end
+
+    def execute_all_concurrently(*algorithms)
+        results = Hash.new
+        sizes = []
+        executor = Concurrent::FixedThreadPool.new(8)
+        futures = algorithms.map do |algorithm|
+            Concurrent::Future.execute({executor: executor}) do
+                [algorithm.name, execute(algorithm)]
+            end
+        end
+        futures.map do |future|
+            name, data = future.value
+            results[name] = data[0]
+            sizes = data[1]
+        end
+        [results, sizes]
+    end
+
+    def execute(sort_algorithm)
+        start = Time.now
+        times = []
+        sizes = []
+        means = []
+        for n in 1..@max_len
+            size = 2 ** n
+            sizes << size
+            times[n - 1] = []
+            repeat = @repeat
+            i = 0
+            while i < repeat
+                array = @array_generator.generate(size)
+                time = Benchmark.measure {sort_algorithm.sort(array)}
+                repeat = [(@max_time / time.real).floor, @repeat].min
+                times[n - 1] << time.real
+                i += 1
+            end
+            mean = times[n - 1].mean
+            means << mean
+            if @log
+                p "#{sort_algorithm.name} sort: the mean time for #{size} random values is #{mean} with #{repeat} repeats"
+            end
+        end
+        p "executed #{sort_algorithm.name} in #{(Time.now - start).round(10)} seconds"
+        [means, sizes]
+    end
 
 end

@@ -13,7 +13,6 @@ class CSVExporter
       (0...first_result.length).each {|i|
         line = []
         data.each {|name, result|
-          p name, result
           line << result[i]
         }
         csv << line.unshift(sizes.shift)

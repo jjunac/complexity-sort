@@ -1,7 +1,9 @@
 class Insertion
 
     def initialize
+        @name="InsertionSort"
     end
+    attr_reader :name
 
     def sort(arr)
         1.upto arr.length - 1 do |i|

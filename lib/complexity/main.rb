@@ -7,14 +7,22 @@ require_relative './sorts/quick'
 
 
 class RubyDefault
-  def sort(array)
-    array.sort
-  end
+    def name()
+        return "Default Ruby sort"
+    end
+
+    def sort(array)
+        array.sort
+    end
+
 end
 
-tester = Tester.new(max_len: 14)
-csv_exporter = CSVExporter.new
+def random(arr, lo, hi)
+    return arr[lo..hi].sample
+end
 
-insertion, sizes = tester.execute_all(Insertion.new, Heap.new, Merge.new, RubyDefault.new)
+tester = Tester.new(max_len: 14, number_max: 1000000, max_time: 2, repeat: 1000, log: true)
+csv_exporter = CSVExporter.new
+insertion, sizes = tester.execute_all(Quick.new, Quick.new(pivot_choice: method(:random)), Insertion.new, Heap.new, Merge.new, RubyDefault.new)
 
 csv_exporter.export_map("test.csv", sizes, insertion)

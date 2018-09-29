@@ -6,6 +6,7 @@ from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
 import numpy as np
 import pandas as pd
 import plotly.figure_factory as FF
+import math
 
 # help(plotly.offline.iplot)
 df = pd.read_csv('../lib/complexity/test.csv')
@@ -18,8 +19,7 @@ for k in df:
     if k != "array size":
         trace = go.Scatter(
             x=df['array size'], y=df[k],  # Data
-            mode='lines', name=k  # Additional options
-        )
+            mode='lines+text', name=f"{k}")
         traces.append(trace)
 
 layout = go.Layout(title='Simple Plot from csv data',

@@ -2,14 +2,21 @@ require_relative 'insertion'
 
 class Quick
 
-    SWAP_TO_INSERTION = 1
-
-    def initialize
+    def initialize(swap_to_insertion: 12, pivot_choice: method(:median_5))
         @insertion = Insertion.new
+        @swap_to_insertion = swap_to_insertion
+        @pivot_choice = pivot_choice
+        @name = "QuickSort_Pivot_#{pivot_choice.name}"
     end
+
+    attr_reader :name
 
     def random(arr, lo, hi)
         return arr[lo..hi].sample
+    end
+
+    def lowest(arr, lo, hi)
+        return lo
     end
 
     def median_3(arr, lo, hi)
@@ -17,7 +24,7 @@ class Quick
             return arr[lo]
         end
         a = arr[lo]
-        b = arr[lo+(hi-lo)/2]
+        b = arr[lo + (hi - lo) / 2]
         c = arr[hi]
         if a < b
             if a >= c
@@ -47,9 +54,9 @@ class Quick
             return arr[lo]
         end
         a = arr[lo]
-        b = arr[lo+(hi-lo)/4]
-        c = arr[lo+(hi-lo)/2]
-        d = arr[lo+3*(hi-lo)/4]
+        b = arr[lo + (hi - lo) / 4]
+        c = arr[lo + (hi - lo) / 2]
+        d = arr[lo + 3 * (hi - lo) / 4]
         e = arr[hi]
         if a < b
             # a < b
@@ -411,15 +418,16 @@ class Quick
     end
 
     def sort(arr)
-        quicksort(arr, 0, arr.length-1, :median_3)
+        quicksort(arr, 0, arr.length - 1)
     end
 
-    def quicksort(arr, lo, hi, pivot_choice)
+    def quicksort(arr, lo, hi)
         if hi <= lo
             return arr
         end
-        if hi - lo <= SWAP_TO_INSERTION
-            return @insertion.sort arr
+        if hi - lo <= @swap_to_insertion
+            @insertion.sort arr[lo..hi]
+            return
         end
         if hi - lo == 1
             if arr[hi] < arr[lo]
@@ -429,25 +437,25 @@ class Quick
         end
 
         # We use Hoare partition scheme
-        pivot = send(pivot_choice, arr, lo, hi)
-        i = lo-1
+        pivot = @pivot_choice.call(arr, lo, hi)
+        i = lo - 1
         j = hi + 1
 
         loop do
             loop do
                 i += 1
-                break if arr[i] < pivot
+                break if arr[i] >= pivot
             end
             loop do
                 j -= 1
-                break if arr[j] > pivot
+                break if arr[j] <= pivot
             end
             break if i >= j
             swap(arr, i, j)
         end
 
-        quicksort(arr, lo, j, pivot_choice)
-        quicksort(arr, j+1, hi, pivot_choice)
+        quicksort(arr, lo, j)
+        quicksort(arr, j + 1, hi)
     end
 
     def swap(arr, i, j)

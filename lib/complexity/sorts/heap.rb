@@ -1,7 +1,9 @@
 class Heap
 
     def initialize
+        @name="HeapSort"
     end
+    attr_reader :name
 
     def parent(i)
         ((i-1)/2).floor
