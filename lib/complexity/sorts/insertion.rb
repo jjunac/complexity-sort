@@ -6,7 +6,13 @@ class Insertion
     attr_reader :name
 
     def sort(arr)
-        1.upto arr.length - 1 do |i|
+        res = arr.clone
+        sort!(res)
+        return res
+    end
+
+    def sort!(arr, lo = 0, hi = arr.length - 1)
+        (lo+1).upto hi do |i|
             x = arr[i]
             j = i - 1
             while j >= 0 and arr[j] > x
@@ -15,7 +21,6 @@ class Insertion
             end
             arr[j+1] = x
         end
-        return arr
     end
 
 end

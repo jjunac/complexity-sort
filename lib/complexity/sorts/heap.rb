@@ -18,13 +18,18 @@ class Heap
     end
 
     def sort(arr)
+        res = arr.clone
+        sort!(res)
+        return res
+    end
+
+    def sort!(arr)
         heapify(arr)
 
         (arr.length-1).downto 1 do |i|
             swap(arr, i, 0)
             siftdown(arr, 0, i-1)
         end
-        return arr
     end
 
     def heapify(arr)

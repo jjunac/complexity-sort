@@ -418,6 +418,12 @@ class Quick
     end
 
     def sort(arr)
+        res = arr.clone
+        sort!(res)
+        return res
+    end
+
+    def sort!(arr)
         quicksort(arr, 0, arr.length - 1)
     end
 
@@ -426,7 +432,7 @@ class Quick
             return arr
         end
         if hi - lo <= @swap_to_insertion
-            @insertion.sort arr[lo..hi]
+            @insertion.sort!(arr, lo, hi)
             return
         end
         if hi - lo == 1

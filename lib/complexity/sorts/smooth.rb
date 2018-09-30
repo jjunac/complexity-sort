@@ -16,6 +16,12 @@ class Smooth
     end
 
     def sort(arr)
+        res = arr.clone
+        sort!(res)
+        return res
+    end
+
+    def sort!(arr)
         @q = 1
         @r = 0
         @p = 1
