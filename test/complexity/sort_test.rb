@@ -22,9 +22,9 @@ class Complexity::SortTest < Minitest::Test
         check_algorithm(Merge.new)
     end
 
-    # def test_smooth
-    #   check_algorithm(Smooth.new)
-    # end
+    def test_smooth
+      check_algorithm(Smooth.new)
+    end
 
     def assert_array_correct(original, sorted)
         assert_equal original.sort, sorted

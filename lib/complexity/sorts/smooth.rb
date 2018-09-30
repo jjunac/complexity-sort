@@ -115,7 +115,7 @@ class Smooth
             r3 = @r1 - @b1
             if p1 == 1 or arr[r3] <= arr[@r1]
                 p1 = 0
-            else
+            elsif p1 > 1 and arr[r3] > arr[@r1]
                 p1 -= 1
                 if @b1 == 1
                     swap(arr, @r1, r3)
@@ -127,14 +127,14 @@ class Smooth
                         down1
                         p1 *= 2
                     end
-                    if arr[r3] <= arr[r2]
+                    if arr[r3] >= arr[r2]
                         swap(arr, @r1, r3)
                         @r1 = r3
                     else
                         swap(arr, @r1, r2)
                         @r1 = r2
                         down1
-                        p1 = 0;
+                        p1 = 0
                     end
                 end
             end
