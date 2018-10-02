@@ -1,19 +1,29 @@
 import csv
 
-import plotly.plotly as py
+import argparse
 import plotly.graph_objs as go
-from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
-import numpy as np
-import pandas as pd
-import plotly.figure_factory as FF
+from plotly.offline import plot, iplot
 import math
 
-# help(plotly.offline.iplot)
-df = pd.read_csv('../lib/complexity/test.csv')
 
-print(df)
-# sample_data_table = FF.create_table(df.head())
-# plot(sample_data_table, filename='sample-data-table')
+parser = argparse.ArgumentParser()
+parser.add_argument("--csv",help="The csv that needs to be plotted",
+default='../test.csv')
+args = parser.parse_args()
+
+def read_csv(csv_file):
+    with open(csv_file,"r") as f:
+        reader = csv.DictReader(f)
+        d = {key:[] for key in reader.fieldnames}
+        rows = [row for row in reader]
+        for key in reader.fieldnames:
+            print(key)
+            for row in rows:
+                d[key].append(row[key])
+        return d
+
+df = read_csv(args.csv)
+
 traces = []
 for k in df:
     if k != "array size":

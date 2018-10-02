@@ -1,5 +1,4 @@
 require 'benchmark'
-require 'concurrent'
 require_relative 'array_generator'
 class Array
     def sum
@@ -31,23 +30,6 @@ class Tester
         algorithms.each {|algorithm|
             results[algorithm.name], sizes = execute(algorithm)
         }
-        [results, sizes]
-    end
-
-    def execute_all_concurrently(*algorithms)
-        results = Hash.new
-        sizes = []
-        executor = Concurrent::FixedThreadPool.new(8)
-        futures = algorithms.map do |algorithm|
-            Concurrent::Future.execute({executor: executor}) do
-                [algorithm.name, execute(algorithm)]
-            end
-        end
-        futures.map do |future|
-            name, data = future.value
-            results[name] = data[0]
-            sizes = data[1]
-        end
         [results, sizes]
     end
 
