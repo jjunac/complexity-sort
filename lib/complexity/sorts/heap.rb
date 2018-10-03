@@ -34,10 +34,7 @@ class Heap
 
     def heapify(arr)
         start = parent arr.length - 1
-
-        start.downto 0 do |parent|
-            siftdown(arr, parent, arr.length - 1)
-        end
+        start.downto(0) { |parent| siftdown(arr, parent, arr.length - 1) }
     end
 
     def siftdown (arr, start, endd)
