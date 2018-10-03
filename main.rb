@@ -23,7 +23,7 @@ def random(arr, lo, hi)
   return arr[lo..hi].sample
 end
 
-tester = Tester.new(max_len: 14, number_max: 1000000, max_time: 10, repeat: 1000, log: true)
+tester = Tester.new(max_len: 14, max_time: 10, repeat: 1000, log: true)
 csv_exporter = CSVExporter.new
 insertion, sizes = tester.execute_all(Quick.new, Quick.new(pivot_choice: method(:random)), Insertion.new, Heap.new, Merge.new, RubyDefault.new)
 
