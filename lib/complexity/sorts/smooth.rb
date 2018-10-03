@@ -1,7 +1,7 @@
 class Smooth
 
     def initialize
-        @name="MergeSort"
+        @name="SmoothSort"
     end
     attr_reader :name
 
