@@ -12,14 +12,13 @@ end
 
 class Tester
 
-    def initialize(number_max: 100000, repeat: 1000, max_time: 10, max_len: 8, log: false, array_generator: nil)
-        @number_max = number_max
+    def initialize(repeat: 1000, max_time: 10, max_len: 8, log: false, array_generator: nil)
         @repeat = repeat
         @max_len = max_len
         @log = log
         @max_time = max_time
         if array_generator.nil?
-            array_generator = RandomArrayGenerator.new(number_max: number_max)
+            array_generator = RandomArrayGenerator.new
         end
         @array_generator = array_generator
     end
