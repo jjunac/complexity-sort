@@ -1,7 +1,9 @@
 class Smooth
 
     def initialize
+        @name="MergeSort"
     end
+    attr_reader :name
 
     def up(); tmp = @b; @b += @c + 1; @c = tmp end
     def down(); tmp = @b; @b = @c; @c = tmp - @c - 1 end
