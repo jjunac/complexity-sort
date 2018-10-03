@@ -1,5 +1,5 @@
 class RandomArrayGenerator
-  def initialize(number_max: 1000)
+  def initialize(number_max: 10000000000000)
     @number_max = number_max
   end
 
@@ -10,7 +10,7 @@ end
 
 class SeededRandomArrayGenerator
 
-  def initialize(seed, number_max: 1000)
+  def initialize(seed, number_max: 10000000000000)
     @rand = Random.new(seed)
     @number_max = number_max
   end

@@ -28,9 +28,9 @@ df = read_csv(args.csv)
 exponents = {}
 for k in df:
     if k != "array size":
-        xmap = list(map(int, df["array size"]))
+        xmap = list(map(int, df["array size"][8:]))
         x = numpy.log(numpy.asarray(xmap))
-        ymap = list(map(float, df[k]))
+        ymap = list(map(float, df[k][8:]))
         y = numpy.log(numpy.asarray(ymap))
         cov = numpy.cov(x, y)
         exponents[k] = cov[1][0] / cov[0][0]
@@ -40,7 +40,8 @@ for k in df:
     if k != "array size":
         trace = go.Scatter(
             x=df['array size'], y=df[k],  # Data
-            mode='lines+text', name=f"{k}")
+            mode='lines+text', name=f"{k}",
+            hoverinfo="y+text", hovertext=f"a={exponents[k]}")
         traces.append(trace)
 
 layout = go.Layout(title='Simple Plot from csv data',
