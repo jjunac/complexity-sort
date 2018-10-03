@@ -429,7 +429,7 @@ class Quick
 
     def quicksort(arr, lo, hi)
         if hi <= lo
-            return arr
+            return
         end
         if hi - lo <= @swap_to_insertion
             @insertion.sort!(arr, lo, hi)
@@ -439,7 +439,7 @@ class Quick
             if arr[hi] < arr[lo]
                 swap(arr, hi, lo)
             end
-            return arr
+            return
         end
 
         # We use Hoare partition scheme

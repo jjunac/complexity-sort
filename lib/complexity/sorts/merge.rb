@@ -11,7 +11,7 @@ class Merge
         end
         mid = arr.length / 2
         left = sort arr.take mid
-        right = sort arr.drop(mid)
+        right = sort arr.drop mid
 
         return merge(left, right)
     end
