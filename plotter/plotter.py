@@ -41,7 +41,7 @@ for k in df:
         trace = go.Scatter(
             x=df['array size'], y=df[k],  # Data
             mode='lines+text', name=f"{k}",
-            hoverinfo="y+text", hovertext=f"a={exponents[k]}")
+            hoverinfo="x+y+text", hovertext=f"a={exponents[k]}")
         traces.append(trace)
 
 layout = go.Layout(title='Simple Plot from csv data',

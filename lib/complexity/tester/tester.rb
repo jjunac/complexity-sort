@@ -41,19 +41,22 @@ class Tester
             size = 2 ** n
             sizes << size
             times[n - 1] = []
-            repeat = @repeat
             i = 0
-            while i < repeat
+            total=0
+            while i < @repeat
                 array = @array_generator.generate(size)
                 time = Benchmark.measure {sort_algorithm.sort(array)}
-                repeat = [(@max_time / time.real).floor, @repeat].min
+                total+=time.real
                 times[n - 1] << time.real
                 i += 1
+                if total>@max_time
+                  break;
+                end
             end
             mean = times[n - 1].mean
             means << mean
             if @log
-                p "#{sort_algorithm.name} sort: the mean time for #{size} random values is #{mean} with #{repeat} repeats"
+                p "#{sort_algorithm.name} sort: the mean time for #{size} random values is #{mean} with #{i} repeats"
             end
         end
         p "executed #{sort_algorithm.name} in #{(Time.now - start).round(10)} seconds"

@@ -6,7 +6,7 @@ class Quick
         @insertion = Insertion.new
         @swap_to_insertion = swap_to_insertion
         @pivot_choice = pivot_choice
-        @name = "QuickSort_Pivot_#{pivot_choice.name}"
+        @name = "QuickSort Pivot: #{pivot_choice.name} Insertion: #{swap_to_insertion}"
     end
 
     attr_reader :name
