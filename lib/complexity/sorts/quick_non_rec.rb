@@ -14,7 +14,7 @@ class QuickNonRec
     end
 
     def lowest(arr, lo, hi)
-        return lo
+        return arr[lo]
     end
 
     def median_3(arr, lo, hi)
