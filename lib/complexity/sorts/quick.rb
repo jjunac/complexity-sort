@@ -2,7 +2,7 @@ require_relative 'insertion'
 
 class Quick
 
-    def initialize(swap_to_insertion: 12, pivot_choice: method(:median_5))
+    def initialize(swap_to_insertion: 12, pivot_choice: Quick.method(:median_5))
         @insertion = Insertion.new
         @swap_to_insertion = swap_to_insertion
         @pivot_choice = pivot_choice
@@ -11,15 +11,15 @@ class Quick
 
     attr_reader :name
 
-    def random(arr, lo, hi)
+    def self.random(arr, lo, hi)
         return arr[lo..hi].sample
     end
 
-    def lowest(arr, lo, hi)
+    def self.lowest(arr, lo, hi)
         return lo
     end
 
-    def median_3(arr, lo, hi)
+    def self.median_3(arr, lo, hi)
         if hi - lo == 1
             return arr[lo]
         end
@@ -49,7 +49,7 @@ class Quick
         end
     end
 
-    def median_5(arr, lo, hi)
+    def self.median_5(arr, lo, hi)
         if hi - lo == 1
             return arr[lo]
         end
@@ -450,11 +450,11 @@ class Quick
         loop do
             loop do
                 i += 1
-                break if arr[i] >= pivot
+                break if arr[i] >= pivot or i >= hi
             end
             loop do
                 j -= 1
-                break if arr[j] <= pivot
+                break if arr[j] <= pivot or j <= lo
             end
             break if i >= j
             swap(arr, i, j)

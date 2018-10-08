@@ -1,10 +1,10 @@
 require_relative 'insertion'
-class QuickLin
+class QuickNonRec
     def initialize(swap_to_insertion: 12, pivot_choice: method(:median_5))
         @insertion = Insertion.new
         @swap_to_insertion = swap_to_insertion
         @pivot_choice = pivot_choice
-        @name = "QuickSortLin Pivot: #{pivot_choice.name} Insertion: #{swap_to_insertion}"
+        @name = "QuickSortNonRec Pivot: #{pivot_choice.name} Insertion: #{swap_to_insertion}"
     end
 
     attr_reader :name
