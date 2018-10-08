@@ -16,7 +16,7 @@ class Quick
     end
 
     def self.lowest(arr, lo, hi)
-        return lo
+        return arr[lo]
     end
 
     def self.median_3(arr, lo, hi)
@@ -450,11 +450,11 @@ class Quick
         loop do
             loop do
                 i += 1
-                break if arr[i] >= pivot or i >= hi
+                break if arr[i] >= pivot
             end
             loop do
                 j -= 1
-                break if arr[j] <= pivot or j <= lo
+                break if arr[j] <= pivot
             end
             break if i >= j
             swap(arr, i, j)

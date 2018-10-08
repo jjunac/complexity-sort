@@ -17,7 +17,6 @@ class Complexity::SortTest < Minitest::Test
     def test_quick
         check_algorithm(Quick.new)
     end
-
     def test_merge
         check_algorithm(Merge.new)
     end
