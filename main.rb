@@ -25,7 +25,7 @@ def random(arr, lo, hi)
   return arr[lo..hi].sample
 end
 
-tester = Tester.new(max_len: 8, max_time: 1, repeat: 1000, log: true)
+tester = Tester.new(max_len: 16, max_time: 10, repeat: 1000, log: true)
 csv_exporter = CSVExporter.new
 
 insertion, sizes = tester.execute_all(Heap.new, Insertion.new, Merge.new, Smooth.new, RubyDefault.new,
